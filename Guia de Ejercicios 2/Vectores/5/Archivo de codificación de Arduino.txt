@@ -1,0 +1,23 @@
+void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(A0));  // Inicializa 
+
+  int resultado = lanzarDado(6);  // Dado de 6 caras
+
+  Serial.print("Resultado del dado: ");
+  Serial.println(resultado);
+}
+
+void loop() {
+}
+
+//  Funcion que lanza el dado 
+int lanzarDado(int lados) {
+
+  if (lados < 1) {
+    return 0;  // Seguridad basica
+  }
+
+  int valor = random(1, lados + 1);
+  return valor;
+}

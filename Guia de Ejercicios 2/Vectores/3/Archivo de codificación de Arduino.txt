@@ -1,0 +1,64 @@
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
+
+int puntaje = 0;
+
+void setup() {
+  lcd.begin(16, 2);
+  randomSeed(analogRead(A0));
+}
+
+void loop() {
+
+  mostrarBienvenida();
+  delay(2000);
+
+  mostrarInicioJuego();
+  delay(2000);
+
+  mostrarPuntaje();
+  delay(3000);
+
+  mostrarFinJuego();
+  delay(3000);
+}
+
+//  Funcion Bienvenida
+void mostrarBienvenida() {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Bienvenido!");
+  lcd.setCursor(0, 1);
+  lcd.print("Jugador listo?");
+}
+
+//  Funcion Inicio
+void mostrarInicioJuego() {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Iniciando...");
+  lcd.setCursor(0, 1);
+  lcd.print("Buena suerte!");
+}
+
+//  Funcion Puntaje
+void mostrarPuntaje() {
+  lcd.clear();
+
+  puntaje = random(0, 101); // Puntaje aleatorio 0-100
+
+  lcd.setCursor(0, 0);
+  lcd.print("Puntuacion:");
+  lcd.setCursor(0, 1);
+  lcd.print(puntaje);
+}
+
+//  Funcion Fin
+void mostrarFinJuego() {
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("Fin del juego");
+  lcd.setCursor(0, 1);
+  lcd.print("Gracias!");
+}

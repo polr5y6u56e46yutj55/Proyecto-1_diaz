@@ -1,0 +1,42 @@
+#define PIN_LED1 8
+#define PIN_LED2 9
+
+int secuencia1[] = {1,0,1,0,1,1,0,0};
+int secuencia2[] = {0,1,0,1,0,0,1,1};
+
+int tamanio = sizeof(secuencia1) / sizeof(secuencia1[0]);
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(PIN_LED1, OUTPUT);
+  pinMode(PIN_LED2, OUTPUT);
+}
+
+void loop() {
+  ejecutarSecuencias();
+  delay(2000);
+}
+
+void ejecutarSecuencias() {
+  Serial.println("Iniciando secuencia doble...");
+
+  for (int i = 0; i < tamanio; i++) {
+
+    // LED 1
+    digitalWrite(PIN_LED1, secuencia1[i] == 1 ? HIGH : LOW);
+
+    // LED 2
+    digitalWrite(PIN_LED2, secuencia2[i] == 1 ? HIGH : LOW);
+
+    Serial.print("Paso ");
+    Serial.print(i);
+    Serial.print(" | LED1: ");
+    Serial.print(secuencia1[i]);
+    Serial.print(" | LED2: ");
+    Serial.println(secuencia2[i]);
+
+    delay(500);
+  }
+
+  Serial.println("Secuencia finalizada.");
+}

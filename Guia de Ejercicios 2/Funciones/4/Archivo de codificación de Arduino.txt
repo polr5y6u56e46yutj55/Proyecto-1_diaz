@@ -1,0 +1,36 @@
+#define PIN_LED 8
+
+// Vector con la secuencia predefinida
+int secuencia[] = {1, 0, 0, 1, 1, 0, 1, 1};
+
+// Calcula el tamaño del vector
+int tamanio = sizeof(secuencia) / sizeof(secuencia[0]);
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(PIN_LED, OUTPUT);
+}
+
+void loop() {
+  ejecutarSecuencia();
+  delay(2000); // Espera antes de repetir la secuencia
+}
+
+void ejecutarSecuencia() {
+  Serial.println("Iniciando secuencia...");
+
+  for (int i = 0; i < tamanio; i++) {
+    
+    if (secuencia[i] == 1) {
+      digitalWrite(PIN_LED, HIGH);
+      Serial.println("LED ENCENDIDO");
+    } else {
+      digitalWrite(PIN_LED, LOW);
+      Serial.println("LED APAGADO");
+    }
+
+    delay(500); // Tiempo entre cada paso
+  }
+
+  Serial.println("Secuencia finalizada.");
+}

@@ -1,0 +1,30 @@
+#define PIN_R 9
+#define PIN_G 10
+#define PIN_B 11
+
+// Vector: 3 colores, cada uno con 3 valores (R,G,B)
+int colores[3][3] = {
+  {255, 0, 0},   // L1 - Rojo
+  {0, 255, 0},   // L2 - Verde
+  {0, 0, 255}    // L3 - Azul
+};
+
+const int CANT_COLORES = 3;
+
+void setup() {
+  pinMode(PIN_R, OUTPUT);
+  pinMode(PIN_G, OUTPUT);
+  pinMode(PIN_B, OUTPUT);
+}
+
+void loop() {
+
+  for(int i = 0; i < CANT_COLORES; i++) {
+
+    analogWrite(PIN_R, colores[i][0]);
+    analogWrite(PIN_G, colores[i][1]);
+    analogWrite(PIN_B, colores[i][2]);
+
+    delay(1000);
+  }
+}

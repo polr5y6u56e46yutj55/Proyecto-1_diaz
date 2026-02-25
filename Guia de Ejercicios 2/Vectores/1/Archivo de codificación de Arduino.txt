@@ -1,0 +1,62 @@
+#define PIN_BUZZER 8
+
+// Notas
+#define NOTE_C4 262
+#define NOTE_D4 294
+#define NOTE_E4 330
+#define NOTE_F4 349
+#define NOTE_G4 392
+#define NOTE_A4 440
+#define NOTE_B4 494
+#define NOTE_C5 523
+
+void setup() {
+  pinMode(PIN_BUZZER, OUTPUT);
+}
+
+void loop() {
+
+  melodia1();
+  delay(1000);
+
+  melodia2();
+  delay(1000);
+
+  melodia3();
+  delay(2000);
+}
+
+//  Melodía 1
+void melodia1() {
+  tone(PIN_BUZZER, NOTE_C4, 300);
+  delay(300);
+  tone(PIN_BUZZER, NOTE_D4, 300);
+  delay(300);
+  tone(PIN_BUZZER, NOTE_E4, 300);
+  delay(300);
+  noTone(PIN_BUZZER);
+}
+
+//  Melodía 2
+void melodia2() {
+  tone(PIN_BUZZER, NOTE_G4, 300);
+  delay(300);
+  tone(PIN_BUZZER, NOTE_E4, 300);
+  delay(300);
+  tone(PIN_BUZZER, NOTE_C4, 300);
+  delay(300);
+  noTone(PIN_BUZZER);
+}
+
+//  Melodía 3
+void melodia3() {
+  tone(PIN_BUZZER, NOTE_C4, 200);
+  delay(200);
+  tone(PIN_BUZZER, NOTE_E4, 200);
+  delay(200);
+  tone(PIN_BUZZER, NOTE_G4, 200);
+  delay(200);
+  tone(PIN_BUZZER, NOTE_C5, 400);
+  delay(400);
+  noTone(PIN_BUZZER);
+}

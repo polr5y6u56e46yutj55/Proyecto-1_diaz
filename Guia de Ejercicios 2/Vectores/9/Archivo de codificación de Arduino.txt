@@ -1,0 +1,30 @@
+#define TAM 5
+
+int vectorNumeros[TAM];  // Vector vacio
+
+void setup() {
+  Serial.begin(9600);
+  randomSeed(analogRead(A0));  
+
+  llenarMultiplo10(vectorNumeros, TAM);
+
+  Serial.println("Vector llenado con multiplos de 10:");
+
+  for(int i = 0; i < TAM; i++) {
+    Serial.print(vectorNumeros[i]);
+    Serial.print(" ");
+  }
+}
+
+void loop() {
+}
+
+//  Funcion que llena vector con multiplos de 10 entre 0 y 100
+void llenarMultiplo10(int vec[], int cantidad) {
+
+  for(int i = 0; i < cantidad; i++) {
+
+    int n = random(0, 11);  // 0 a 10
+    vec[i] = n * 10;        // Multiplo de 10
+  }
+}

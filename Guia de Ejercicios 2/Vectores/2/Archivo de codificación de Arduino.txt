@@ -1,0 +1,43 @@
+#define PIN_TRIG 9
+#define PIN_ECHO 10
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(PIN_TRIG, OUTPUT);
+  pinMode(PIN_ECHO, INPUT);
+}
+
+void loop() {
+
+  float distancia = medirDistancia();
+
+  Serial.print("Distancia: ");
+  Serial.print(distancia);
+  Serial.println(" cm");
+
+  delay(1000);
+}
+
+//  Funcion que devuelve la distancia en cm
+float medirDistancia() {
+
+  long duracion;
+  float distancia;
+
+  // Asegurar pulso 
+  digitalWrite(PIN_TRIG, LOW);
+  delayMicroseconds(2);
+
+  // Pulso de 10 microsegundos
+  digitalWrite(PIN_TRIG, HIGH);
+  delayMicroseconds(10);
+  digitalWrite(PIN_TRIG, LOW);
+
+  // Leer tiempo del eco
+  duracion = pulseIn(PIN_ECHO, HIGH);
+
+  // Calcular distancia
+  distancia = (duracion * 0.0343) / 2;
+
+  return distancia;
+}

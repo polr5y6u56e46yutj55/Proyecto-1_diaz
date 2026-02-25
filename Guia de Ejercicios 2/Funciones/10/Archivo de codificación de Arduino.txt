@@ -1,0 +1,43 @@
+#define PIN_BUZZER 8
+#define TAM 10
+
+int numeros[TAM];
+
+void setup() {
+  Serial.begin(9600);
+  pinMode(PIN_BUZZER, OUTPUT);
+
+ 
+  randomSeed(analogRead(A0));
+
+  Serial.println("Generando numeros aleatorios...\n");
+
+  bool apareceCinco = false;
+
+  for (int i = 0; i < TAM; i++) {
+
+    numeros[i] = random(1, 11);  // 1 al 10
+
+    Serial.print(numeros[i]);
+    Serial.print(" ");
+
+    if (numeros[i] == 5) {
+      apareceCinco = true;
+    }
+  }
+
+  Serial.println("\n");
+
+  if (apareceCinco) {
+    Serial.println("Aparecio el numero 5! Activando buzzer...");
+    
+    digitalWrite(PIN_BUZZER, HIGH);
+    delay(1000);
+    digitalWrite(PIN_BUZZER, LOW);
+  } else {
+    Serial.println("No aparecio el numero 5.");
+  }
+}
+
+void loop() {
+}

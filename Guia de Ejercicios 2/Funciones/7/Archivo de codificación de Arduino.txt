@@ -1,0 +1,31 @@
+#define CANT_LEDS 5
+
+int pines[CANT_LEDS] = {2, 3, 4, 5, 6};
+
+// Vector bidimensional con la escalera
+int secuencia[5][5] = {
+  {1,0,0,0,0},
+  {1,1,0,0,0},
+  {1,1,1,0,0},
+  {1,1,1,1,0},
+  {1,1,1,1,1}
+};
+
+void setup() {
+  for(int i = 0; i < CANT_LEDS; i++) {
+    pinMode(pines[i], OUTPUT);
+  }
+}
+
+void loop() {
+  for(int fila = 0; fila < 5; fila++) {
+
+    for(int col = 0; col < CANT_LEDS; col++) {
+      digitalWrite(pines[col], secuencia[fila][col]);
+    }
+
+    delay(400);
+  }
+
+  delay(1000);
+}

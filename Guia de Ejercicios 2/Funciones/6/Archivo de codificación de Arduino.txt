@@ -1,0 +1,28 @@
+int numeros[] = {2, 6, 10, 11};
+int tamanio = sizeof(numeros) / sizeof(numeros[0]);
+
+void setup() {
+  Serial.begin(9600);
+
+  Serial.println("Mostrando los primeros 5 multiplos:");
+
+  for (int i = 0; i < tamanio; i++) {
+
+    Serial.print("Numero base: ");
+    Serial.println(numeros[i]);
+
+    for (int j = 1; j <= 5; j++) {
+      int multiplo = numeros[i] * j;
+
+      Serial.print("Multiplo ");
+      Serial.print(j);
+      Serial.print(": ");
+      Serial.println(multiplo);
+    }
+
+    Serial.println("---------------------");
+  }
+}
+
+void loop() {
+}
