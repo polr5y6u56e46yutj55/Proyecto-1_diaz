@@ -1,0 +1,153 @@
+#include <Adafruit_NeoPixel.h>
+
+#define PIN_D1A 6
+#define PIN_D1B 7
+#define PIN_D2A 8
+#define PIN_D2B 9
+
+#define NUM_LEDS 8
+#define PIN_BOTON 2
+#define PIN_BUZZER 3
+
+Adafruit_NeoPixel tira1(NUM_LEDS, PIN_D1A, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel tira2(NUM_LEDS, PIN_D1B, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel tira3(NUM_LEDS, PIN_D2A, NEO_GRB + NEO_KHZ800);
+Adafruit_NeoPixel tira4(NUM_LEDS, PIN_D2B, NEO_GRB + NEO_KHZ800);
+
+
+void lanzarDados();
+void mostrarDado1(int numero);
+void mostrarDado2(int numero);
+void apagar(Adafruit_NeoPixel &tira);
+void apagarTodo();
+void ganador();
+void prenderTodo();
+
+bool estadoAnterior = HIGH;
+unsigned long ultimoTiempo = 0;
+const unsigned long debounce = 200;
+
+void setup() {
+  pinMode(PIN_BOTON, INPUT_PULLUP);
+  pinMode(PIN_BUZZER, OUTPUT);
+
+  tira1.begin();
+  tira2.begin();
+  tira3.begin();
+  tira4.begin();
+
+  apagarTodo();
+
+  randomSeed(analogRead(A0));
+}
+
+void loop() {
+  bool estadoActual = digitalRead(PIN_BOTON);
+
+  if (estadoAnterior == HIGH && estadoActual == LOW &&
+      millis() - ultimoTiempo > debounce) {
+
+    ultimoTiempo = millis();
+    lanzarDados();
+  }
+
+  estadoAnterior = estadoActual;
+}
+
+void lanzarDados() {
+
+  int dado1 = random(1, 7);
+  int dado2 = random(1, 7);
+
+  for (int i = 0; i < 15; i++) {
+    mostrarDado1(random(1,7));
+    mostrarDado2(random(1,7));
+    delay(70);
+  }
+
+  mostrarDado1(dado1);
+  mostrarDado2(dado2);
+
+  if (dado1 + dado2 == 7) {
+    ganador();
+  }
+}
+
+void mostrarDado1(int numero) {
+
+  // Apagar completamente ambas tiras
+  for (int i = 0; i < NUM_LEDS; i++) {
+    tira1.setPixelColor(i, 0);
+    tira2.setPixelColor(i, 0);
+  }
+
+  // Encender solo los necesarios
+  for (int i = 0; i < numero; i++) {
+    if (i < 4)
+      tira1.setPixelColor(i, tira1.Color(0,150,0));
+    else
+      tira2.setPixelColor(i - 4, tira2.Color(0,150,0));
+  }
+
+  tira1.show();
+  tira2.show();
+}
+
+void mostrarDado2(int numero) {
+
+  for (int i = 0; i < NUM_LEDS; i++) {
+    tira3.setPixelColor(i, 0);
+    tira4.setPixelColor(i, 0);
+  }
+
+  for (int i = 0; i < numero; i++) {
+    if (i < 4)
+      tira3.setPixelColor(i, tira3.Color(0,0,150));
+    else
+      tira4.setPixelColor(i - 4, tira4.Color(0,0,150));
+  }
+
+  tira3.show();
+  tira4.show();
+}
+
+void apagar(Adafruit_NeoPixel &tira) {
+  for (int i = 0; i < NUM_LEDS; i++) {
+    tira.setPixelColor(i, 0);
+  }
+  tira.show();
+}
+
+void apagarTodo() {
+  apagar(tira1);
+  apagar(tira2);
+  apagar(tira3);
+  apagar(tira4);
+}
+
+void ganador() {
+
+  tone(PIN_BUZZER, 1200, 300);
+  delay(300);
+  tone(PIN_BUZZER, 1600, 300);
+
+  for (int i = 0; i < 6; i++) {
+    prenderTodo();
+    delay(150);
+    apagarTodo();
+    delay(150);
+  }
+}
+
+void prenderTodo() {
+  for (int i = 0; i < NUM_LEDS; i++) {
+    tira1.setPixelColor(i, tira1.Color(150,0,0));
+    tira2.setPixelColor(i, tira2.Color(150,0,0));
+    tira3.setPixelColor(i, tira3.Color(150,0,0));
+    tira4.setPixelColor(i, tira4.Color(150,0,0));
+  }
+  tira1.show();
+  tira2.show();
+  tira3.show();
+  tira4.show();
+}
